@@ -134,14 +134,35 @@ nav {
     height: 100vh;
     background-color: var(--bg);
     z-index: 1000;
-    display: none;
+    display: flex;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .mobile-menu.active {
-    display: flex;
     opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.mobile-menu-close {
+    position: absolute;
+    top: 24px;
+    right: 20px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: var(--text);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-close:hover {
+    transform: scale(1.1);
 }
 
 .mobile-menu-content {
@@ -178,7 +199,7 @@ nav {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 32px;
     text-align: center;
 }
 
@@ -228,16 +249,16 @@ nav {
 .hero-content {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 28px;
     align-items: center;
 }
 
 .hero-subtitle {
     font-family: 'DM Sans', sans-serif;
-    font-size: 17px;
-    font-weight: 300;
-    color: var(--gray);
-    line-height: 1.7;
+    font-size: 18px;
+    font-weight: 400;
+    color: #444444;
+    line-height: 1.75;
     margin: 0;
     opacity: 0;
     animation: fadeIn 0.8s ease 0.5s forwards;
@@ -280,7 +301,7 @@ nav {
 .hero-cta-secondary {
     display: inline-block;
     color: var(--gray);
-    padding: 16px 0;
+    padding: 4px 0;
     text-decoration: none;
     font-family: 'DM Sans', sans-serif;
     font-weight: 400;
@@ -309,7 +330,7 @@ nav {
 
 .servicios-header {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 48px;
 }
 
 .servicios-title {
@@ -323,6 +344,7 @@ nav {
 .servicios-subtitle {
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
+    font-weight: 600;
     color: var(--gray);
     margin: 0;
 }
@@ -351,7 +373,6 @@ nav {
 
 .servicio-card.featured {
     border-color: var(--accent);
-    transform: scale(1.02);
 }
 
 .servicio-card.featured::before {
@@ -371,41 +392,45 @@ nav {
 
 .servicio-price {
     font-family: 'Syne', sans-serif;
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
     color: var(--text);
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 }
 
 .servicio-name {
     font-family: 'Syne', sans-serif;
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
     color: var(--text);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .servicio-description {
     font-family: 'DM Sans', sans-serif;
     font-size: 16px;
-    color: var(--gray);
-    line-height: 1.6;
+    font-weight: 500;
+    color: #333333;
+    line-height: 1.65;
     margin-bottom: 24px;
 }
 
 .servicio-includes {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     flex: 1;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    padding-top: 20px;
 }
 
 .servicio-includes h4 {
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray);
     margin-bottom: 12px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.5px;
 }
 
 .servicio-includes ul {
@@ -416,11 +441,17 @@ nav {
 
 .servicio-includes li {
     font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--gray);
-    padding: 4px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #2a2a2a;
+    padding: 7px 0;
+    padding-left: 24px;
     position: relative;
-    padding-left: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.servicio-includes li:last-child {
+    border-bottom: none;
 }
 
 .servicio-includes li::before {
@@ -428,7 +459,8 @@ nav {
     position: absolute;
     left: 0;
     color: var(--accent);
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 800;
 }
 
 .servicio-cta {
@@ -474,7 +506,7 @@ nav {
 
 .como-trabajamos-header {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 48px;
 }
 
 .como-trabajamos-title {
@@ -489,7 +521,6 @@ nav {
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
     color: var(--gray);
-    margin: 0;
     max-width: 600px;
     margin: 0 auto;
 }
@@ -508,27 +539,39 @@ nav {
 }
 
 .proceso-number {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 120px;
     height: 120px;
     background-color: var(--bg);
     color: var(--text);
     border-radius: 50%;
-    line-height: 120px;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 700;
     margin-bottom: 24px;
     font-family: 'Syne', sans-serif;
     border: 2px solid var(--border);
     position: relative;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
+}
+
+
+.proceso.active .proceso-number {
+    background-color: var(--accent);
+    box-shadow: 0 8px 32px rgba(200, 240, 60, 0.35);
+    border-color: var(--accent);
+    transform: scale(1.07);
 }
 
 .proceso:hover .proceso-number {
-    transform: scale(1.1);
-    background-color: var(--accent);
-    color: var(--text);
-    box-shadow: 0 8px 24px rgba(200, 240, 60, 0.4);
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.proceso.active:hover .proceso-number {
+    transform: scale(1.08);
+    box-shadow: 0 10px 36px rgba(200, 240, 60, 0.5);
 }
 
 .proceso h3 {
@@ -547,7 +590,7 @@ nav {
 .proceso p {
     color: #444444;
     font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 1.6;
 }
@@ -606,7 +649,7 @@ nav {
 
 /* Footer - Mobile */
 footer {
-    padding: 60px 0 30px;
+    padding: 40px 0 24px;
     background-color: var(--text);
     color: var(--bg);
 }
@@ -716,6 +759,7 @@ footer {
     
     .hero-content {
         align-items: flex-start;
+        padding-right: 24px;
     }
     
     .hero-cta {
@@ -724,16 +768,20 @@ footer {
     
     /* Servicios Desktop */
     .servicios {
-        padding: 120px 0;
+        padding: 96px 0;
     }
     
     .servicios-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .servicio-card.featured {
+        transform: scale(1.02);
+    }
     
     /* Procesos Desktop */
     .como-trabajamos {
-        padding: 120px 0;
+        padding: 96px 0;
     }
     
     .procesos {
