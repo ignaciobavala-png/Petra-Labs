@@ -1,1 +1,9 @@
-{"buildCommand": null, "outputDirectory": ".", "framework": null}
+{
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "framework": null,
+  "rewrites": [
+    { "source": "/robots.txt", "destination": "/public/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/public/sitemap.xml" }
+  ]
+}
