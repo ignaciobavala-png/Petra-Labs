@@ -34,6 +34,25 @@
     padding: 48px 24px 80px;
   }
 
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--soft);
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: color 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .back-link:hover {
+    color: var(--dark);
+  }
+
   /* Header */
   .header {
     text-align: center;
@@ -550,6 +569,8 @@
 </style>
 </head>
 <body>
+
+<a href="../index.html" class="back-link">← Petra Labs</a>
 
 <div class="header">
   <div class="brand">PETRA LABS — <span>Auditoría Express</span></div>
