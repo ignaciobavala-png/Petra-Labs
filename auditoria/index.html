@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Auditoría SEO Gratuita | Petra Labs</title>
-<meta name="description" content="Analizá tu sitio web gratis en segundos. Performance, SEO, accesibilidad y más — powered by Google PageSpeed." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231A1A1A'/><text x='50' y='74' font-size='64' text-anchor='middle' fill='%23C8F03C' font-family='sans-serif' font-weight='bold'>P</text></svg>">
+<title>Auditoría Express — Petra Labs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
 <style>
@@ -33,44 +31,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-  }
-
-  /* Top nav */
-  .top-nav {
-    width: 100%;
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    background: var(--cream);
-  }
-
-  .top-nav-logo {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 15px;
-    font-weight: 800;
-    color: var(--dark);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-  }
-
-  .top-nav-back {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 14px;
-    color: var(--soft);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .top-nav-back:hover { color: var(--dark); }
-
-  /* Main content wrapper */
-  .main-content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 48px 24px 80px;
   }
 
@@ -591,13 +551,6 @@
 </head>
 <body>
 
-<nav class="top-nav">
-  <a href="/" class="top-nav-logo">PETRA LABS</a>
-  <a href="/" class="top-nav-back">← Volver al inicio</a>
-</nav>
-
-<div class="main-content">
-
 <div class="header">
   <div class="brand">PETRA LABS — <span>Auditoría Express</span></div>
   <h1>¿Cómo está<br>tu sitio <em>hoy</em>?</h1>
@@ -697,21 +650,34 @@
       Hablar con Petra Labs
     </a>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
-      <button class="btn-share" id="shareBtn" onclick="shareResult()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        Compartir resultado
+      <button class="btn-share" id="shareBtn" onclick="generateShareImage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar resultado
       </button>
       <button class="btn-retry" onclick="resetTool()">Analizar otro sitio</button>
     </div>
   </div>
 </div>
 
-</div><!-- end .main-content -->
+<!-- Preview modal -->
+<div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:24px;">
+  <div style="background:#1a1a18;border-radius:20px;padding:24px;max-width:520px;width:100%;text-align:center;">
+    <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:16px;font-family:'Bricolage Grotesque',sans-serif;">Tu tarjeta de resultado — lista para compartir</p>
+    <img id="previewImg" style="width:100%;border-radius:12px;margin-bottom:20px;" />
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <a id="downloadLink" download="auditoria-petra-labs.png" style="display:inline-flex;align-items:center;gap:8px;background:#C8F03C;color:#1a1a18;padding:12px 24px;border-radius:10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15px;text-decoration:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Guardar imagen
+      </a>
+      <button onclick="closeModal()" style="background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);color:white;padding:12px 20px;border-radius:10px;font-family:'Bricolage Grotesque',sans-serif;font-size:14px;cursor:pointer;">Cerrar</button>
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast">✓ Link copiado al portapapeles</div>
 
 <script>
-const PAGESPEED_KEY = 'AIzaSyCHd2dqOm1lSZir9B8nGoJxB4Tted8GVdw';
+const PAGESPEED_KEY = ''; // funciona sin key con límite razonable
 const WA_NUMBER = '5491127343775';
 
 let currentUrl = '';
@@ -776,6 +742,7 @@ async function startAnalysis() {
   currentUrl = url;
   const btn = document.getElementById('analyzeBtn');
   btn.disabled = true;
+  document.getElementById('inputSection');
 
   // Show loading
   document.getElementById('loadingSection').classList.add('active');
@@ -954,6 +921,7 @@ function resetTool() {
   document.getElementById('resultsSection').classList.remove('active');
   document.getElementById('urlInput').value = '';
   document.getElementById('urlInput').focus();
+  // Reset loading steps
   ['step1','step2','step3','step4'].forEach(id => {
     const el = document.getElementById(id);
     el.className = 'loading-step';
@@ -975,35 +943,278 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2800);
 }
 
-function shareResult() {
-  const url = new URL(window.location.href);
-  url.searchParams.set('url', currentUrl);
-  const shareUrl = url.toString();
-
-  if (navigator.share) {
-    const domain = new URL(currentUrl).hostname;
-    const score = document.getElementById('scoreNumber').textContent;
-    navigator.share({
-      title: `Auditoría web de ${domain} — Petra Labs`,
-      text: `Audité el sitio ${domain} con la herramienta de Petra Labs y obtuvo ${score}/100. ¿Cómo está el tuyo?`,
-      url: shareUrl
-    }).catch(() => copyToClipboard(shareUrl));
-  } else {
-    copyToClipboard(shareUrl);
-  }
+function closeModal() {
+  document.getElementById('shareModal').style.display = 'none';
 }
 
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('shareBtn');
-    btn.classList.add('copied');
-    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ¡Link copiado!`;
-    showToast('✓ Link copiado — compartilo donde quieras');
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Compartir resultado`;
-    }, 3000);
+function getScoreColor(score) {
+  if (score >= 80) return '#22c55e';
+  if (score >= 50) return '#f59e0b';
+  return '#ef4444';
+}
+
+function getScoreLabel(score) {
+  if (score >= 85) return 'Excelente';
+  if (score >= 65) return 'Bueno';
+  if (score >= 45) return 'Regular';
+  return 'Crítico';
+}
+
+async function generateShareImage() {
+  const btn = document.getElementById('shareBtn');
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Generando...`;
+  btn.disabled = true;
+
+  // Gather all data
+  const scoreEl = document.getElementById('scoreNumber');
+  const globalScore = parseInt(scoreEl.textContent);
+  const perf = parseInt(document.getElementById('valPerf').textContent) || 0;
+  const seo = parseInt(document.getElementById('valSeo').textContent) || 0;
+  const acc = parseInt(document.getElementById('valAcc').textContent) || 0;
+  const bp = parseInt(document.getElementById('valBp').textContent) || 0;
+  const domain = document.getElementById('scoreUrl').textContent;
+  const scoreLabel = getScoreLabel(globalScore);
+  const scoreColor = getScoreColor(globalScore);
+
+  // Canvas dimensions — 1080x1080 (Instagram square) / also great for Twitter
+  const W = 1080;
+  const H = 1080;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // ─── BACKGROUND ───
+  ctx.fillStyle = '#F5F2EE';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle dot grid pattern
+  ctx.fillStyle = 'rgba(0,0,0,0.04)';
+  for (let x = 40; x < W; x += 40) {
+    for (let y = 40; y < H; y += 40) {
+      ctx.beginPath();
+      ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Big score color blob background (top right)
+  const grad = ctx.createRadialGradient(W - 100, 100, 0, W - 100, 100, 420);
+  grad.addColorStop(0, scoreColor + '22');
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // ─── TOP HEADER BAR ───
+  ctx.fillStyle = '#1a1a18';
+  ctx.fillRect(0, 0, W, 90);
+
+  // PETRA LABS wordmark
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 22px sans-serif';
+  ctx.letterSpacing = '8px';
+  ctx.fillText('PETRA LABS', 48, 54);
+
+  // Tag right
+  ctx.fillStyle = '#C8F03C';
+  ctx.fillRect(W - 220, 24, 172, 42);
+  ctx.fillStyle = '#1a1a18';
+  ctx.font = 'bold 14px sans-serif';
+  ctx.fillText('AUDITORÍA EXPRESS', W - 208, 50);
+
+  // ─── DOMAIN + DATE ───
+  const today = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' });
+  ctx.fillStyle = '#888880';
+  ctx.font = '24px sans-serif';
+  ctx.fillText(domain, 48, 155);
+  ctx.font = '20px sans-serif';
+  ctx.fillText(today, 48, 188);
+
+  // ─── MAIN SCORE CIRCLE ───
+  const cx = W - 220;
+  const cy = 280;
+  const r = 130;
+
+  // Outer shadow ring
+  ctx.beginPath();
+  ctx.arc(cx, cy, r + 12, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(0,0,0,0.04)';
+  ctx.fill();
+
+  // Background ring
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.strokeStyle = '#e0dcd4';
+  ctx.lineWidth = 16;
+  ctx.stroke();
+
+  // Score arc
+  const startAngle = -Math.PI / 2;
+  const endAngle = startAngle + (globalScore / 100) * 2 * Math.PI;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, startAngle, endAngle);
+  ctx.strokeStyle = scoreColor;
+  ctx.lineWidth = 16;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  // Score number
+  ctx.fillStyle = '#1a1a18';
+  ctx.font = 'bold 72px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(globalScore, cx, cy + 22);
+
+  // /100
+  ctx.fillStyle = '#888880';
+  ctx.font = '22px sans-serif';
+  ctx.fillText('/100', cx, cy + 52);
+
+  // Score label badge
+  const labelW = 140;
+  const labelX = cx - labelW / 2;
+  ctx.fillStyle = scoreColor;
+  roundRect(ctx, labelX, cy + 68, labelW, 36, 18);
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 16px sans-serif';
+  ctx.fillText(scoreLabel, cx, cy + 92);
+
+  ctx.textAlign = 'left';
+
+  // ─── SECTION: HEADLINE ───
+  ctx.fillStyle = '#1a1a18';
+  ctx.font = 'bold 56px sans-serif';
+  const lines = wrapText(ctx, `El sitio de ${domain} obtuvo`, 520, 'bold 56px sans-serif');
+  let lineY = 240;
+  lines.forEach(line => {
+    ctx.fillText(line, 48, lineY);
+    lineY += 64;
   });
+
+  // Score highlight box
+  ctx.fillStyle = '#C8F03C';
+  roundRect(ctx, 48, lineY - 8, 280, 80, 14);
+  ctx.fillStyle = '#1a1a18';
+  ctx.font = 'bold 48px sans-serif';
+  ctx.fillText(`${globalScore} puntos`, 68, lineY + 52);
+
+  // ─── METRICS SECTION ───
+  const metricsY = 480;
+  ctx.fillStyle = '#888880';
+  ctx.font = 'bold 16px sans-serif';
+  ctx.letterSpacing = '3px';
+  ctx.fillText('MÉTRICAS DETALLADAS', 48, metricsY);
+  ctx.letterSpacing = '0px';
+
+  const metrics = [
+    { label: 'Performance', value: perf },
+    { label: 'SEO', value: seo },
+    { label: 'Accesibilidad', value: acc },
+    { label: 'Buenas Prácticas', value: bp },
+  ];
+
+  metrics.forEach((m, i) => {
+    const barY = metricsY + 32 + i * 78;
+    const barW = W - 96;
+
+    // Label + value
+    ctx.fillStyle = '#1a1a18';
+    ctx.font = 'bold 22px sans-serif';
+    ctx.fillText(m.label, 48, barY + 20);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = getScoreColor(m.value);
+    ctx.font = 'bold 22px sans-serif';
+    ctx.fillText(`${m.value}/100`, W - 48, barY + 20);
+    ctx.textAlign = 'left';
+
+    // Track
+    ctx.fillStyle = '#e0dcd4';
+    roundRect(ctx, 48, barY + 30, barW, 14, 7);
+
+    // Fill
+    const fillW = (m.value / 100) * barW;
+    ctx.fillStyle = getScoreColor(m.value);
+    roundRect(ctx, 48, barY + 30, fillW, 14, 7);
+  });
+
+  // ─── DIVIDER ───
+  ctx.strokeStyle = '#e0dcd4';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(48, 810);
+  ctx.lineTo(W - 48, 810);
+  ctx.stroke();
+
+  // ─── BOTTOM CTA ───
+  ctx.fillStyle = '#1a1a18';
+  ctx.font = 'bold 28px sans-serif';
+  ctx.fillText('¿Querés mejorar estos números?', 48, 860);
+
+  ctx.fillStyle = '#888880';
+  ctx.font = '22px sans-serif';
+  ctx.fillText('Auditá tu sitio gratis en petralabs.xyz/auditoria', 48, 895);
+
+  // CTA button shape
+  ctx.fillStyle = '#1a1a18';
+  roundRect(ctx, 48, 920, 340, 60, 14);
+  ctx.fillStyle = '#C8F03C';
+  ctx.font = 'bold 20px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('petralabs.xyz/auditoria', 48 + 170, 957);
+  ctx.textAlign = 'left';
+
+  // Powered by
+  ctx.fillStyle = '#bbb';
+  ctx.font = '17px sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText('Powered by Google PageSpeed Insights', W - 48, 957);
+  ctx.textAlign = 'left';
+
+  // ─── OUTPUT ───
+  const dataUrl = canvas.toDataURL('image/png');
+
+  // Show preview modal
+  document.getElementById('previewImg').src = dataUrl;
+  document.getElementById('downloadLink').href = dataUrl;
+  document.getElementById('downloadLink').download = `auditoria-${domain.replace(/\./g,'-')}.png`;
+  document.getElementById('shareModal').style.display = 'flex';
+
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Descargar resultado`;
+  btn.disabled = false;
+}
+
+// Helper: rounded rectangle
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+  ctx.fill();
+}
+
+// Helper: text wrapping
+function wrapText(ctx, text, maxWidth, font) {
+  ctx.font = font;
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  words.forEach(word => {
+    const test = line + (line ? ' ' : '') + word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  });
+  if (line) lines.push(line);
+  return lines;
 }
 
 // Auto-run if URL param present
@@ -1015,7 +1226,6 @@ window.addEventListener('load', () => {
     startAnalysis();
   }
 });
-
 document.getElementById('urlInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') startAnalysis();
 });
