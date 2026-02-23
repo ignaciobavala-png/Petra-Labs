@@ -965,214 +965,142 @@ async function generateShareImage() {
   btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Generando...`;
   btn.disabled = true;
 
-  // Gather all data
-  const scoreEl = document.getElementById('scoreNumber');
-  const globalScore = parseInt(scoreEl.textContent);
-  const perf = parseInt(document.getElementById('valPerf').textContent) || 0;
-  const seo = parseInt(document.getElementById('valSeo').textContent) || 0;
-  const acc = parseInt(document.getElementById('valAcc').textContent) || 0;
-  const bp = parseInt(document.getElementById('valBp').textContent) || 0;
+  const globalScore = parseInt(document.getElementById('scoreNumber').textContent);
+  const perf  = parseInt(document.getElementById('valPerf').textContent) || 0;
+  const seo   = parseInt(document.getElementById('valSeo').textContent)  || 0;
+  const acc   = parseInt(document.getElementById('valAcc').textContent)  || 0;
+  const bp    = parseInt(document.getElementById('valBp').textContent)   || 0;
   const domain = document.getElementById('scoreUrl').textContent;
-  const scoreLabel = getScoreLabel(globalScore);
   const scoreColor = getScoreColor(globalScore);
+  const scoreLabel = getScoreLabel(globalScore);
 
-  // Canvas dimensions — 1080x1080 (Instagram square) / also great for Twitter
-  const W = 1080;
-  const H = 1080;
+  // ── Emotional headline based on score ──
+  function getHook(score, dom) {
+    if (score >= 85) return [`${dom}`, `tiene una web de 10.`];
+    if (score >= 65) return [`${dom}`, `está bien. Pero puede estar mejor.`];
+    if (score >= 45) return [`${dom}`, `está perdiendo clientes\ncada día.`];
+    return [`${dom}`, `tiene un problema serio\nen su web.`];
+  }
+  const [hookDomain, hookMsg] = getHook(globalScore, domain);
+
+  const W = 1080, H = 1080;
   const canvas = document.createElement('canvas');
-  canvas.width = W;
-  canvas.height = H;
+  canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
 
-  // ─── BACKGROUND ───
-  ctx.fillStyle = '#F5F2EE';
+  // ── BACKGROUND: dark with score color glow ──
+  ctx.fillStyle = '#0f0f0e';
   ctx.fillRect(0, 0, W, H);
 
-  // Subtle dot grid pattern
-  ctx.fillStyle = 'rgba(0,0,0,0.04)';
-  for (let x = 40; x < W; x += 40) {
-    for (let y = 40; y < H; y += 40) {
-      ctx.beginPath();
-      ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-      ctx.fill();
-    }
+  // Glow behind score number
+  const glow = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, 480);
+  glow.addColorStop(0, scoreColor + '28');
+  glow.addColorStop(1, 'transparent');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle noise texture lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.025)';
+  ctx.lineWidth = 1;
+  for (let y = 0; y < H; y += 6) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
   }
 
-  // Big score color blob background (top right)
-  const grad = ctx.createRadialGradient(W - 100, 100, 0, W - 100, 100, 420);
-  grad.addColorStop(0, scoreColor + '22');
-  grad.addColorStop(1, 'transparent');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, W, H);
-
-  // ─── TOP HEADER BAR ───
-  ctx.fillStyle = '#1a1a18';
-  ctx.fillRect(0, 0, W, 90);
-
-  // PETRA LABS wordmark
+  // ── TOP NAV ──
+  // Left: PETRA LABS
   ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 22px sans-serif';
-  ctx.letterSpacing = '8px';
-  ctx.fillText('PETRA LABS', 48, 54);
-
-  // Tag right
-  ctx.fillStyle = '#C8F03C';
-  ctx.fillRect(W - 220, 24, 172, 42);
-  ctx.fillStyle = '#1a1a18';
-  ctx.font = 'bold 14px sans-serif';
-  ctx.fillText('AUDITORÍA EXPRESS', W - 208, 50);
-
-  // ─── DOMAIN + DATE ───
-  const today = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' });
-  ctx.fillStyle = '#888880';
-  ctx.font = '24px sans-serif';
-  ctx.fillText(domain, 48, 155);
-  ctx.font = '20px sans-serif';
-  ctx.fillText(today, 48, 188);
-
-  // ─── MAIN SCORE CIRCLE ───
-  const cx = W - 220;
-  const cy = 280;
-  const r = 130;
-
-  // Outer shadow ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, r + 12, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(0,0,0,0.04)';
-  ctx.fill();
-
-  // Background ring
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, 0, Math.PI * 2);
-  ctx.strokeStyle = '#e0dcd4';
-  ctx.lineWidth = 16;
-  ctx.stroke();
-
-  // Score arc
-  const startAngle = -Math.PI / 2;
-  const endAngle = startAngle + (globalScore / 100) * 2 * Math.PI;
-  ctx.beginPath();
-  ctx.arc(cx, cy, r, startAngle, endAngle);
-  ctx.strokeStyle = scoreColor;
-  ctx.lineWidth = 16;
-  ctx.lineCap = 'round';
-  ctx.stroke();
-
-  // Score number
-  ctx.fillStyle = '#1a1a18';
-  ctx.font = 'bold 72px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText(globalScore, cx, cy + 22);
-
-  // /100
-  ctx.fillStyle = '#888880';
-  ctx.font = '22px sans-serif';
-  ctx.fillText('/100', cx, cy + 52);
-
-  // Score label badge
-  const labelW = 140;
-  const labelX = cx - labelW / 2;
-  ctx.fillStyle = scoreColor;
-  roundRect(ctx, labelX, cy + 68, labelW, 36, 18);
-  ctx.fillStyle = '#fff';
-  ctx.font = 'bold 16px sans-serif';
-  ctx.fillText(scoreLabel, cx, cy + 92);
-
+  ctx.font = 'bold 26px sans-serif';
   ctx.textAlign = 'left';
+  ctx.fillText('PETRA LABS', 60, 72);
 
-  // ─── SECTION: HEADLINE ───
-  ctx.fillStyle = '#1a1a18';
-  ctx.font = 'bold 56px sans-serif';
-  const lines = wrapText(ctx, `El sitio de ${domain} obtuvo`, 520, 'bold 56px sans-serif');
-  let lineY = 240;
-  lines.forEach(line => {
-    ctx.fillText(line, 48, lineY);
-    lineY += 64;
+  // Right: lime pill
+  ctx.fillStyle = '#C8F03C';
+  roundRect(ctx, W - 240, 42, 180, 40, 20);
+  ctx.fillStyle = '#0f0f0e';
+  ctx.font = 'bold 15px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('AUDITORÍA GRATIS', W - 150, 68);
+
+  // ── GIANT SCORE — center stage ──
+  ctx.textAlign = 'center';
+
+  // Score number — massive
+  ctx.font = 'bold 320px sans-serif';
+  ctx.fillStyle = scoreColor;
+  ctx.globalAlpha = 0.12;
+  ctx.fillText(globalScore, W/2, 560);
+  ctx.globalAlpha = 1;
+
+  ctx.font = 'bold 260px sans-serif';
+  ctx.fillStyle = scoreColor;
+  ctx.fillText(globalScore, W/2, 550);
+
+  // /100 small
+  ctx.font = '36px sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.fillText('/ 100', W/2, 600);
+
+  // Score label pill
+  const pillW = 180;
+  ctx.fillStyle = scoreColor;
+  roundRect(ctx, W/2 - pillW/2, 620, pillW, 52, 26);
+  ctx.fillStyle = '#0f0f0e';
+  ctx.font = 'bold 22px sans-serif';
+  ctx.fillText(scoreLabel.toUpperCase(), W/2, 654);
+
+  // ── HOOK TEXT ──
+  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '28px sans-serif';
+  ctx.fillText(hookDomain, 60, 740);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 42px sans-serif';
+  const msgLines = hookMsg.split('\n');
+  msgLines.forEach((line, i) => {
+    ctx.fillText(line, 60, 790 + i * 50);
   });
 
-  // Score highlight box
-  ctx.fillStyle = '#C8F03C';
-  roundRect(ctx, 48, lineY - 8, 280, 80, 14);
-  ctx.fillStyle = '#1a1a18';
-  ctx.font = 'bold 48px sans-serif';
-  ctx.fillText(`${globalScore} puntos`, 68, lineY + 52);
-
-  // ─── METRICS SECTION ───
-  const metricsY = 480;
-  ctx.fillStyle = '#888880';
-  ctx.font = 'bold 16px sans-serif';
-  ctx.letterSpacing = '3px';
-  ctx.fillText('MÉTRICAS DETALLADAS', 48, metricsY);
-  ctx.letterSpacing = '0px';
-
+  // ── 4 MINI METRIC PILLS ──
   const metrics = [
     { label: 'Performance', value: perf },
-    { label: 'SEO', value: seo },
-    { label: 'Accesibilidad', value: acc },
-    { label: 'Buenas Prácticas', value: bp },
+    { label: 'SEO',         value: seo  },
+    { label: 'Accesib.',    value: acc  },
+    { label: 'Prácticas',   value: bp   },
   ];
 
+  const pillStartX = 60;
+  const pillGap = (W - 120) / 4;
+
   metrics.forEach((m, i) => {
-    const barY = metricsY + 32 + i * 78;
-    const barW = W - 96;
+    const px = pillStartX + i * pillGap;
+    const py = msgLines.length > 1 ? 920 : 880;
+    const color = getScoreColor(m.value);
 
-    // Label + value
-    ctx.fillStyle = '#1a1a18';
-    ctx.font = 'bold 22px sans-serif';
-    ctx.fillText(m.label, 48, barY + 20);
-    ctx.textAlign = 'right';
-    ctx.fillStyle = getScoreColor(m.value);
-    ctx.font = 'bold 22px sans-serif';
-    ctx.fillText(`${m.value}/100`, W - 48, barY + 20);
-    ctx.textAlign = 'left';
+    // Pill bg
+    ctx.fillStyle = 'rgba(255,255,255,0.07)';
+    roundRect(ctx, px, py, pillGap - 16, 80, 14);
 
-    // Track
-    ctx.fillStyle = '#e0dcd4';
-    roundRect(ctx, 48, barY + 30, barW, 14, 7);
+    // Value
+    ctx.fillStyle = color;
+    ctx.font = 'bold 30px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(m.value, px + (pillGap - 16) / 2, py + 36);
 
-    // Fill
-    const fillW = (m.value / 100) * barW;
-    ctx.fillStyle = getScoreColor(m.value);
-    roundRect(ctx, 48, barY + 30, fillW, 14, 7);
+    // Label
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.font = '16px sans-serif';
+    ctx.fillText(m.label, px + (pillGap - 16) / 2, py + 60);
   });
 
-  // ─── DIVIDER ───
-  ctx.strokeStyle = '#e0dcd4';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(48, 810);
-  ctx.lineTo(W - 48, 810);
-  ctx.stroke();
-
-  // ─── BOTTOM CTA ───
-  ctx.fillStyle = '#1a1a18';
-  ctx.font = 'bold 28px sans-serif';
-  ctx.fillText('¿Querés mejorar estos números?', 48, 860);
-
-  ctx.fillStyle = '#888880';
-  ctx.font = '22px sans-serif';
-  ctx.fillText('Auditá tu sitio gratis en petralabs.xyz/auditoria', 48, 895);
-
-  // CTA button shape
-  ctx.fillStyle = '#1a1a18';
-  roundRect(ctx, 48, 920, 340, 60, 14);
-  ctx.fillStyle = '#C8F03C';
-  ctx.font = 'bold 20px sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText('petralabs.xyz/auditoria', 48 + 170, 957);
-  ctx.textAlign = 'left';
-
-  // Powered by
-  ctx.fillStyle = '#bbb';
-  ctx.font = '17px sans-serif';
+  // ── BOTTOM CTA ──
   ctx.textAlign = 'right';
-  ctx.fillText('Powered by Google PageSpeed Insights', W - 48, 957);
-  ctx.textAlign = 'left';
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.font = '20px sans-serif';
+  ctx.fillText('petralabs.xyz/auditoria', W - 60, H - 36);
 
-  // ─── OUTPUT ───
+  // ── OUTPUT ──
   const dataUrl = canvas.toDataURL('image/png');
-
-  // Show preview modal
   document.getElementById('previewImg').src = dataUrl;
   document.getElementById('downloadLink').href = dataUrl;
   document.getElementById('downloadLink').download = `auditoria-${domain.replace(/\./g,'-')}.png`;
