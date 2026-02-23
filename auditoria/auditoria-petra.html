@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría Express — Petra Labs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F2EE;
+    --lime: #C8F03C;
+    --lime-dark: #a8cc1e;
+    --dark: #1a1a18;
+    --mid: #3d3d38;
+    --soft: #888880;
+    --border: #e0dcd4;
+    --green: #22c55e;
+    --red: #ef4444;
+    --yellow: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .brand {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--soft);
+    margin-bottom: 16px;
+  }
+
+  .brand span {
+    color: var(--dark);
+  }
+
+  h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  h1 em {
+    font-style: normal;
+    background: var(--lime);
+    padding: 0 8px 2px;
+    border-radius: 4px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: var(--soft);
+    font-weight: 400;
+    max-width: 480px;
+    line-height: 1.5;
+  }
+
+  /* Input section */
+  .input-section {
+    width: 100%;
+    max-width: 600px;
+    animation: fadeUp 0.6s 0.15s ease both;
+  }
+
+  .input-wrap {
+    display: flex;
+    gap: 12px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 8px 8px 8px 20px;
+    transition: border-color 0.2s;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  }
+
+  .input-wrap:focus-within {
+    border-color: var(--dark);
+  }
+
+  .input-wrap input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 16px;
+    color: var(--dark);
+    background: transparent;
+    min-width: 0;
+  }
+
+  .input-wrap input::placeholder {
+    color: #bbb;
+  }
+
+  .btn-analyze {
+    background: var(--dark);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    white-space: nowrap;
+  }
+
+  .btn-analyze:hover {
+    background: var(--mid);
+  }
+
+  .btn-analyze:active {
+    transform: scale(0.97);
+  }
+
+  .btn-analyze:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .hint {
+    font-size: 13px;
+    color: var(--soft);
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* Loading */
+  .loading {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 48px 0;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .loading.active { display: flex; }
+
+  .loading-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .loading-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--soft);
+    opacity: 0.4;
+    transition: opacity 0.4s, color 0.4s;
+  }
+
+  .loading-step.active {
+    opacity: 1;
+    color: var(--dark);
+  }
+
+  .loading-step.done {
+    opacity: 1;
+    color: var(--green);
+  }
+
+  .step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  .step-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--lime);
+    border-top-color: var(--dark);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  /* Results */
+  .results {
+    display: none;
+    width: 100%;
+    max-width: 640px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .results.active { display: block; }
+
+  /* Score circle */
+  .score-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .score-circle {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+
+  .score-circle svg {
+    transform: rotate(-90deg);
+  }
+
+  .score-circle .bg-ring {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 10;
+  }
+
+  .score-circle .progress-ring {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .score-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--dark);
+  }
+
+  .score-label {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .score-url {
+    font-size: 13px;
+    color: var(--soft);
+  }
+
+  /* Checks grid */
+  .checks-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 500px) {
+    .checks-grid { grid-template-columns: 1fr; }
+  }
+
+  .check-card {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .check-card.pass { border-left: 4px solid var(--green); }
+  .check-card.fail { border-left: 4px solid var(--red); }
+  .check-card.warn { border-left: 4px solid var(--yellow); }
+
+  .check-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .check-content {}
+  .check-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--mid);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 2px;
+  }
+  .check-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .check-desc {
+    font-size: 12px;
+    color: var(--soft);
+    line-height: 1.4;
+  }
+
+  /* Performance bars */
+  .perf-section {
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .perf-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--soft);
+    margin-bottom: 16px;
+  }
+
+  .perf-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .perf-bar-row:last-child { margin-bottom: 0; }
+
+  .perf-bar-label {
+    font-size: 13px;
+    font-weight: 500;
+    width: 130px;
+    flex-shrink: 0;
+    color: var(--mid);
+  }
+
+  .perf-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .perf-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    width: 0;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .perf-bar-value {
+    font-size: 13px;
+    font-weight: 700;
+    width: 48px;
+    text-align: right;
+    color: var(--dark);
+  }
+
+  /* Recommendations */
+  .reco-section {
+    margin-bottom: 28px;
+  }
+
+  .reco-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--soft);
+    margin-bottom: 12px;
+  }
+
+  .reco-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .reco-item .reco-num {
+    font-weight: 800;
+    color: var(--lime-dark);
+    flex-shrink: 0;
+    font-size: 15px;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--dark);
+    border-radius: 20px;
+    padding: 32px;
+    text-align: center;
+    color: white;
+  }
+
+  .cta-section h3 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .cta-section p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+
+  .cta-section p strong {
+    color: var(--lime);
+  }
+
+  .btn-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--lime);
+    color: var(--dark);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: -0.01em;
+  }
+
+  .btn-wa:hover {
+    background: var(--lime-dark);
+    transform: translateY(-1px);
+  }
+
+  .btn-wa svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn-retry {
+    background: none;
+    border: none;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .btn-share {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-share:hover { background: rgba(255,255,255,0.18); }
+  .btn-share.copied { border-color: var(--lime); color: var(--lime); }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--dark);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 99px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid var(--lime);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Error */
+  .error-box {
+    display: none;
+    background: #fff5f5;
+    border: 1.5px solid #fecaca;
+    border-radius: 14px;
+    padding: 20px 24px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .error-box.active { display: block; }
+  .error-box p { font-size: 14px; color: #b91c1c; line-height: 1.5; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">PETRA LABS — <span>Auditoría Express</span></div>
+  <h1>¿Cómo está<br>tu sitio <em>hoy</em>?</h1>
+  <p class="subtitle">Ingresá la URL de tu sitio web y en segundos te decimos qué está bien, qué está mal y qué perdés si no lo arreglás.</p>
+</div>
+
+<div class="input-section">
+  <div class="input-wrap">
+    <input type="url" id="urlInput" placeholder="https://tusitio.com" autocomplete="off" spellcheck="false" />
+    <button class="btn-analyze" id="analyzeBtn" onclick="startAnalysis()">Analizar →</button>
+  </div>
+  <p class="hint">Gratis, sin registro, sin trampa. Powered by Google PageSpeed.</p>
+</div>
+
+<div class="error-box" id="errorBox">
+  <p id="errorMsg">Ocurrió un error. Verificá la URL e intentá de nuevo.</p>
+</div>
+
+<div class="loading" id="loadingSection">
+  <div class="loading-steps" id="loadingSteps">
+    <div class="loading-step" id="step1">
+      <div class="step-dot"></div>
+      Verificando que el sitio sea accesible...
+    </div>
+    <div class="loading-step" id="step2">
+      <div class="step-dot"></div>
+      Analizando performance con Google PageSpeed...
+    </div>
+    <div class="loading-step" id="step3">
+      <div class="step-dot"></div>
+      Revisando SEO y accesibilidad...
+    </div>
+    <div class="loading-step" id="step4">
+      <div class="step-dot"></div>
+      Generando diagnóstico personalizado...
+    </div>
+  </div>
+</div>
+
+<div class="results" id="resultsSection">
+  <!-- Score header -->
+  <div class="score-header">
+    <div class="score-circle">
+      <svg width="140" height="140" viewBox="0 0 140 140">
+        <circle class="bg-ring" cx="70" cy="70" r="60"/>
+        <circle class="progress-ring" id="progressRing" cx="70" cy="70" r="60"
+          stroke-dasharray="376.99"
+          stroke-dashoffset="376.99"
+          stroke="var(--lime-dark)"/>
+      </svg>
+      <div class="score-number" id="scoreNumber">0</div>
+    </div>
+    <div class="score-label" id="scoreLabel">Calculando...</div>
+    <div class="score-url" id="scoreUrl"></div>
+  </div>
+
+  <!-- Performance metrics -->
+  <div class="perf-section">
+    <div class="perf-title">Métricas de Velocidad</div>
+    <div class="perf-bar-row">
+      <span class="perf-bar-label">Performance</span>
+      <div class="perf-bar-track"><div class="perf-bar-fill" id="barPerf"></div></div>
+      <span class="perf-bar-value" id="valPerf">—</span>
+    </div>
+    <div class="perf-bar-row">
+      <span class="perf-bar-label">SEO</span>
+      <div class="perf-bar-track"><div class="perf-bar-fill" id="barSeo"></div></div>
+      <span class="perf-bar-value" id="valSeo">—</span>
+    </div>
+    <div class="perf-bar-row">
+      <span class="perf-bar-label">Accesibilidad</span>
+      <div class="perf-bar-track"><div class="perf-bar-fill" id="barAcc"></div></div>
+      <span class="perf-bar-value" id="valAcc">—</span>
+    </div>
+    <div class="perf-bar-row">
+      <span class="perf-bar-label">Buenas prácticas</span>
+      <div class="perf-bar-track"><div class="perf-bar-fill" id="barBp"></div></div>
+      <span class="perf-bar-value" id="valBp">—</span>
+    </div>
+  </div>
+
+  <!-- Check cards -->
+  <div class="checks-grid" id="checksGrid"></div>
+
+  <!-- Recommendations -->
+  <div class="reco-section">
+    <div class="reco-title">Lo que mejoraríamos primero</div>
+    <div id="recoList"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h3>¿Querés arreglar esto?</h3>
+    <p>Mandanos los resultados y te decimos <strong>exactamente</strong> cuánto cuesta solucionarlo.<br>Primera consulta siempre gratis.</p>
+    <a id="waLink" href="#" class="btn-wa" target="_blank">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Hablar con Petra Labs
+    </a>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+      <button class="btn-share" id="shareBtn" onclick="shareResult()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Compartir resultado
+      </button>
+      <button class="btn-retry" onclick="resetTool()">Analizar otro sitio</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Link copiado al portapapeles</div>
+
+<script>
+const PAGESPEED_KEY = ''; // funciona sin key con límite razonable
+const WA_NUMBER = '5491127343775';
+
+let currentUrl = '';
+
+function normalizeUrl(input) {
+  input = input.trim();
+  if (!input.startsWith('http')) input = 'https://' + input;
+  try { return new URL(input).href; }
+  catch { return null; }
+}
+
+function scoreColor(score) {
+  if (score >= 80) return '#22c55e';
+  if (score >= 50) return '#f59e0b';
+  return '#ef4444';
+}
+
+function scoreEmoji(score) {
+  if (score >= 80) return '✅';
+  if (score >= 50) return '⚠️';
+  return '❌';
+}
+
+function scoreClass(score) {
+  if (score >= 80) return 'pass';
+  if (score >= 50) return 'warn';
+  return 'fail';
+}
+
+function globalLabel(score) {
+  if (score >= 85) return '¡Tu sitio está en excelente forma!';
+  if (score >= 65) return 'Tu sitio está bien, pero tiene margen';
+  if (score >= 45) return 'Tu sitio necesita atención';
+  return 'Tu sitio tiene problemas serios';
+}
+
+async function activateStep(stepId, delay = 0) {
+  await new Promise(r => setTimeout(r, delay));
+  const el = document.getElementById(stepId);
+  el.classList.add('active');
+  el.innerHTML = `<div class="step-spinner"></div>${el.textContent.trim()}`;
+}
+
+async function completeStep(stepId) {
+  const el = document.getElementById(stepId);
+  el.classList.remove('active');
+  el.classList.add('done');
+  el.innerHTML = `<span style="font-size:14px">✓</span> ${el.textContent.replace('✓','').trim()}`;
+}
+
+async function startAnalysis() {
+  const input = document.getElementById('urlInput').value;
+  const url = normalizeUrl(input);
+
+  document.getElementById('errorBox').classList.remove('active');
+
+  if (!url) {
+    showError('Ingresá una URL válida, por ejemplo: https://tusitio.com');
+    return;
+  }
+
+  currentUrl = url;
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  document.getElementById('inputSection');
+
+  // Show loading
+  document.getElementById('loadingSection').classList.add('active');
+  document.getElementById('resultsSection').classList.remove('active');
+
+  await activateStep('step1', 100);
+  await activateStep('step2', 800);
+
+  const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&category=performance&category=seo&category=accessibility&category=best-practices${PAGESPEED_KEY ? '&key='+PAGESPEED_KEY : ''}`;
+
+  let data;
+  try {
+    await completeStep('step1');
+    const res = await fetch(apiUrl);
+    if (!res.ok) throw new Error('API error ' + res.status);
+    data = await res.json();
+    await completeStep('step2');
+    await activateStep('step3', 200);
+    await new Promise(r => setTimeout(r, 600));
+    await completeStep('step3');
+    await activateStep('step4', 200);
+    await new Promise(r => setTimeout(r, 500));
+    await completeStep('step4');
+    await new Promise(r => setTimeout(r, 300));
+  } catch(e) {
+    document.getElementById('loadingSection').classList.remove('active');
+    btn.disabled = false;
+    showError('No pudimos analizar ese sitio. Asegurate de que la URL sea correcta y el sitio esté online.');
+    return;
+  }
+
+  document.getElementById('loadingSection').classList.remove('active');
+  renderResults(data, url);
+  btn.disabled = false;
+}
+
+function renderResults(data, url) {
+  const cats = data.lighthouseResult?.categories || {};
+  const audits = data.lighthouseResult?.audits || {};
+
+  const perf = Math.round((cats.performance?.score || 0) * 100);
+  const seo = Math.round((cats.seo?.score || 0) * 100);
+  const acc = Math.round((cats.accessibility?.score || 0) * 100);
+  const bp = Math.round((cats['best-practices']?.score || 0) * 100);
+  const global = Math.round((perf + seo + acc + bp) / 4);
+
+  // Score circle
+  const circumference = 376.99;
+  const offset = circumference - (global / 100) * circumference;
+  const ring = document.getElementById('progressRing');
+  ring.style.stroke = scoreColor(global);
+  setTimeout(() => { ring.style.strokeDashoffset = offset; }, 100);
+
+  // Animate number
+  let n = 0;
+  const interval = setInterval(() => {
+    n = Math.min(n + 2, global);
+    document.getElementById('scoreNumber').textContent = n;
+    if (n >= global) clearInterval(interval);
+  }, 18);
+
+  document.getElementById('scoreLabel').textContent = globalLabel(global);
+  const domain = new URL(url).hostname;
+  document.getElementById('scoreUrl').textContent = domain;
+
+  // Bars
+  function setBar(barId, valId, score) {
+    const fill = document.getElementById(barId);
+    const val = document.getElementById(valId);
+    fill.style.background = scoreColor(score);
+    val.textContent = score;
+    setTimeout(() => { fill.style.width = score + '%'; }, 200);
+  }
+  setBar('barPerf', 'valPerf', perf);
+  setBar('barSeo', 'valSeo', seo);
+  setBar('barAcc', 'valAcc', acc);
+  setBar('barBp', 'valBp', bp);
+
+  // Check cards
+  const https = url.startsWith('https://');
+  const hasViewport = audits['viewport']?.score === 1;
+  const hasMeta = audits['meta-description']?.score === 1;
+  const lcp = audits['largest-contentful-paint']?.displayValue || '—';
+  const fcp = audits['first-contentful-paint']?.displayValue || '—';
+  const tbt = audits['total-blocking-time']?.displayValue || '—';
+  const cls = audits['cumulative-layout-shift']?.displayValue || '—';
+
+  const checks = [
+    {
+      name: 'HTTPS / Seguridad',
+      value: https ? 'Activo ✓' : 'Sin HTTPS ✗',
+      desc: https ? 'Tu sitio usa conexión segura.' : 'Sin HTTPS los usuarios ven advertencias de seguridad.',
+      status: https ? 'pass' : 'fail',
+      icon: https ? '🔒' : '🔓'
+    },
+    {
+      name: 'Adaptado a celular',
+      value: hasViewport ? 'Sí ✓' : 'No ✗',
+      desc: hasViewport ? 'El sitio tiene viewport configurado.' : 'El sitio puede verse mal en celulares.',
+      status: hasViewport ? 'pass' : 'fail',
+      icon: hasViewport ? '📱' : '💻'
+    },
+    {
+      name: 'Meta descripción (SEO)',
+      value: hasMeta ? 'Presente ✓' : 'Ausente ✗',
+      desc: hasMeta ? 'Google tiene descripción para mostrar.' : 'Sin meta description Google inventa el texto.',
+      status: hasMeta ? 'pass' : 'warn',
+      icon: hasMeta ? '🔍' : '🔎'
+    },
+    {
+      name: 'Velocidad de carga',
+      value: `FCP: ${fcp}`,
+      desc: `LCP: ${lcp} · TBT: ${tbt}`,
+      status: perf >= 80 ? 'pass' : perf >= 50 ? 'warn' : 'fail',
+      icon: perf >= 80 ? '⚡' : '🐢'
+    },
+    {
+      name: 'Estabilidad visual',
+      value: `CLS: ${cls}`,
+      desc: 'Mide cuánto "salta" el contenido al cargar.',
+      status: audits['cumulative-layout-shift']?.score >= 0.9 ? 'pass' : 'warn',
+      icon: audits['cumulative-layout-shift']?.score >= 0.9 ? '🖼️' : '📐'
+    },
+    {
+      name: 'SEO General',
+      value: `${seo}/100`,
+      desc: seo >= 80 ? 'Buena base para posicionamiento.' : 'Hay factores SEO sin configurar.',
+      status: scoreClass(seo),
+      icon: scoreEmoji(seo)
+    }
+  ];
+
+  const grid = document.getElementById('checksGrid');
+  grid.innerHTML = checks.map(c => `
+    <div class="check-card ${c.status}">
+      <div class="check-icon">${c.icon}</div>
+      <div class="check-content">
+        <div class="check-name">${c.name}</div>
+        <div class="check-value">${c.value}</div>
+        <div class="check-desc">${c.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Recommendations
+  const recos = [];
+  if (!https) recos.push('Activar HTTPS es lo primero — sin esto Google penaliza tu posicionamiento y los navegadores muestran "sitio no seguro".');
+  if (!hasViewport) recos.push('Configurar el viewport para mobile es urgente: más del 60% del tráfico viene desde celulares.');
+  if (!hasMeta) recos.push('Agregar meta descripción a cada página mejora el CTR en Google y ayuda al posicionamiento.');
+  if (perf < 50) recos.push('La velocidad de carga es crítica: un sitio lento pierde visitantes antes de que vean el contenido. Optimización de imágenes y caché daría resultados inmediatos.');
+  else if (perf < 80) recos.push('La performance tiene margen de mejora — optimizar imágenes y reducir JavaScript no usado puede subir el score significativamente.');
+  if (acc < 70) recos.push('La accesibilidad afecta SEO y experiencia de usuario: agregar textos alternativos en imágenes y mejorar contraste de colores son cambios rápidos y efectivos.');
+  if (recos.length === 0) recos.push('¡El sitio está en muy buen estado! Podemos trabajar en optimizaciones avanzadas para llevarlo al siguiente nivel.');
+
+  document.getElementById('recoList').innerHTML = recos.map((r, i) => `
+    <div class="reco-item">
+      <span class="reco-num">${i + 1}.</span>
+      <span>${r}</span>
+    </div>
+  `).join('');
+
+  // WhatsApp link
+  const waText = `Hola Petra Labs! Acabo de auditar mi sitio ${domain} y obtuve un score de ${global}/100 (Performance: ${perf}, SEO: ${seo}, Accesibilidad: ${acc}). ¿Pueden ayudarme a mejorarlo?`;
+  document.getElementById('waLink').href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`;
+
+  document.getElementById('resultsSection').classList.add('active');
+  document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showError(msg) {
+  document.getElementById('errorMsg').textContent = msg;
+  document.getElementById('errorBox').classList.add('active');
+}
+
+function resetTool() {
+  document.getElementById('resultsSection').classList.remove('active');
+  document.getElementById('urlInput').value = '';
+  document.getElementById('urlInput').focus();
+  // Reset loading steps
+  ['step1','step2','step3','step4'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = 'loading-step';
+    const texts = {
+      step1: 'Verificando que el sitio sea accesible...',
+      step2: 'Analizando performance con Google PageSpeed...',
+      step3: 'Revisando SEO y accesibilidad...',
+      step4: 'Generando diagnóstico personalizado...'
+    };
+    el.innerHTML = `<div class="step-dot"></div>${texts[id]}`;
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function shareResult() {
+  // Build shareable URL with params
+  const url = new URL(window.location.href);
+  url.searchParams.set('url', currentUrl);
+  const shareUrl = url.toString();
+
+  if (navigator.share) {
+    const domain = new URL(currentUrl).hostname;
+    const score = document.getElementById('scoreNumber').textContent;
+    navigator.share({
+      title: `Auditoría web de ${domain} — Petra Labs`,
+      text: `Audité el sitio ${domain} con la herramienta de Petra Labs y obtuvo ${score}/100. ¿Cómo está el tuyo?`,
+      url: shareUrl
+    }).catch(() => copyToClipboard(shareUrl));
+  } else {
+    copyToClipboard(shareUrl);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('shareBtn');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ¡Link copiado!`;
+    showToast('✓ Link copiado — compartilo donde quieras');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Compartir resultado`;
+    }, 3000);
+  });
+}
+
+// Auto-run if URL param present
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(window.location.search);
+  const preUrl = params.get('url');
+  if (preUrl) {
+    document.getElementById('urlInput').value = preUrl;
+    startAnalysis();
+  }
+});
+document.getElementById('urlInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startAnalysis();
+});
+</script>
+</body>
+</html>
