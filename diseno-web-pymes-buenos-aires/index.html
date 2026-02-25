@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseño Web para PyMEs en Buenos Aires — Petra Labs</title>
+    <meta name="description" content="Diseño web profesional para PyMEs en Buenos Aires. Sites que reflejan tu marca, generan confianza y convierten visitas en clientes. Desde USD 400." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://petralabs.xyz/diseno-web-pymes-buenos-aires/" />
+    <meta property="og:title" content="Diseño Web para PyMEs en Buenos Aires — Petra Labs" />
+    <meta property="og:description" content="Diseño web profesional para PyMEs en Buenos Aires. Sites que reflejan tu marca, generan confianza y convierten visitas en clientes. Desde USD 400." />
+    <meta property="og:url" content="https://petralabs.xyz/diseno-web-pymes-buenos-aires/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://petralabs.xyz/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Diseño Web para PyMEs Buenos Aires | Petra Labs" />
+    <meta name="twitter:description" content="Diseño web profesional para pequeñas y medianas empresas en Buenos Aires. Desde USD 400." />
+    <meta name="twitter:image" content="https://petralabs.xyz/og-image.png" />
+    <meta name="author" content="Petra Labs" />
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231A1A1A'/><text x='50' y='74' font-size='64' text-anchor='middle' fill='%23C8F03C' font-family='sans-serif' font-weight='bold'>P</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        /* SEO Content Section */
+        .seo-content {
+            padding: 80px 0;
+            background-color: var(--bg);
+            border-top: 1px solid var(--border);
+        }
+
+        .seo-content-container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .seo-content h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 48px 0 16px;
+        }
+
+        .seo-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px;
+            color: #333333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .seo-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .seo-content ul li {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px;
+            color: #333333;
+            line-height: 1.7;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .seo-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .seo-content ul li strong {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        /* Two-column contrast block */
+        .contrast-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 40px 0;
+        }
+
+        .contrast-col {
+            padding: 28px 32px;
+        }
+
+        .contrast-col.bad {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .contrast-col.good {
+            background-color: var(--text);
+        }
+
+        .contrast-col h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .contrast-col.bad h4 {
+            color: var(--gray);
+        }
+
+        .contrast-col.good h4 {
+            color: var(--accent);
+        }
+
+        .contrast-col ul {
+            margin: 0;
+            gap: 10px;
+        }
+
+        .contrast-col.bad ul li {
+            color: #666;
+        }
+
+        .contrast-col.bad ul li::before {
+            content: '✕';
+            color: #aaa;
+        }
+
+        .contrast-col.good ul li {
+            color: rgba(245, 242, 238, 0.85);
+        }
+
+        .contrast-col.good ul li::before {
+            content: '✓';
+            color: var(--accent);
+        }
+
+        .seo-highlight {
+            background-color: var(--text);
+            color: var(--bg);
+            border-radius: 8px;
+            padding: 32px 36px;
+            margin: 40px 0;
+        }
+
+        .seo-highlight p {
+            color: var(--bg);
+            font-size: 18px;
+            font-style: italic;
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.75;
+        }
+
+        .seo-highlight span {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--accent);
+            margin-top: 16px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Hero SEO */
+        .hero-seo {
+            padding: 60px 20px 40px;
+            background-color: var(--bg);
+        }
+
+        .hero-seo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .hero-seo-eyebrow {
+            display: inline-block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            width: fit-content;
+        }
+
+        .hero-seo h1 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(36px, 7vw, 60px);
+            color: var(--text);
+            line-height: 1.0;
+            margin: 0;
+        }
+
+        .hero-seo h1 .accent {
+            color: var(--accent);
+        }
+
+        .hero-seo-subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            color: #444444;
+            line-height: 1.75;
+            max-width: 640px;
+            margin: 0;
+        }
+
+        .hero-seo-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .hero-seo-cta a.primary {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--text);
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-seo-cta a.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(200, 240, 60, 0.3);
+        }
+
+        .hero-seo-cta a.secondary {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .hero-seo-cta a.secondary:hover {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        @media (min-width: 768px) {
+            .contrast-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hero-seo {
+                padding: 100px 20px 80px;
+            }
+
+            .hero-seo-cta {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .seo-content {
+                padding: 100px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">PETRA LABS</a>
+            <button class="hamburger" aria-label="Abrir menú">☰</button>
+            <ul class="nav-links">
+                <li><a href="/#servicios">Servicios</a></li>
+                <li><a href="/#como-trabajamos">Cómo trabajamos</a></li>
+                <li><a href="/auditoria" class="cta-nav auditoria-nav">Auditoría free ✦</a></li>
+                <li><a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20dise%C3%B1o%20web%20para%20mi%20PyME" class="cta-nav" target="_blank" rel="noopener noreferrer">Hablemos →</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <button class="mobile-menu-close">✕</button>
+        <div class="mobile-menu-content">
+            <a href="/#servicios">Servicios</a>
+            <a href="/#como-trabajamos">Cómo trabajamos</a>
+            <a href="/auditoria">Auditoría free ✦</a>
+            <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20dise%C3%B1o%20web%20para%20mi%20PyME" target="_blank" rel="noopener noreferrer" class="cta-nav">Hablemos →</a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-seo">
+        <div class="hero-seo-container">
+            <span class="hero-seo-eyebrow">Diseño Web · PyMEs · Buenos Aires</span>
+            <h1>
+                Diseño web para<br>
+                <span class="accent">PyMEs</span> que quieren<br>
+                verse en serio
+            </h1>
+            <p class="hero-seo-subtitle">
+                Tu sitio web es la primera impresión que da tu empresa. Diseñamos sites para pequeñas y medianas empresas en Buenos Aires que generan confianza, reflejan tu identidad y convierten visitas en clientes.
+            </p>
+            <div class="hero-seo-cta">
+                <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20dise%C3%B1o%20web%20para%20mi%20PyME" class="primary" target="_blank" rel="noopener noreferrer">Consultá por WhatsApp →</a>
+                <a href="#servicios" class="secondary">Ver planes y precios ↓</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Content -->
+    <section class="seo-content">
+        <div class="seo-content-container">
+
+            <h2>El diseño web importa más de lo que pensás</h2>
+            <p>
+                Los usuarios se forman una opinión sobre un sitio web en menos de 50 milisegundos. Antes de leer una sola palabra, ya decidieron si confían en ese negocio o no. Para una PyME, eso es crítico: un diseño desprolijo, una paleta de colores genérica o una tipografía difícil de leer pueden costarle un cliente a tu empresa antes de que llegue a ver qué ofrecés.
+            </p>
+            <p>
+                El <strong>diseño web para PyMEs</strong> no se trata de hacer algo "lindo". Se trata de construir credibilidad visual, guiar al visitante hacia la acción que querés que tome, y comunicar en segundos lo que hace tu empresa y por qué debería elegirte.
+            </p>
+
+            <div class="seo-highlight">
+                <p>"Un buen diseño no es el que gana premios de diseño. Es el que hace que tu cliente diga: 'esto se ve serio, los llamo'."</p>
+                <span>— Petra Labs, Buenos Aires</span>
+            </div>
+
+            <h2>Lo que evitamos vs. lo que construimos</h2>
+            <p>Hay patrones de diseño que arruinan la credibilidad de una PyME online. Estos son los que evitamos:</p>
+
+            <div class="contrast-grid">
+                <div class="contrast-col bad">
+                    <h4>Lo que evitamos</h4>
+                    <ul>
+                        <li>Plantillas genéricas que se ven como miles de otros sitios</li>
+                        <li>Textos largos sin jerarquía visual</li>
+                        <li>CTAs escondidos o poco claros</li>
+                        <li>Fondos y tipografías que cansan la vista</li>
+                        <li>Diseño que se rompe en celular</li>
+                    </ul>
+                </div>
+                <div class="contrast-col good">
+                    <h4>Lo que construimos</h4>
+                    <ul>
+                        <li>Identidad visual única alineada a tu marca</li>
+                        <li>Jerarquía clara: el cliente sabe qué hacer en cada pantalla</li>
+                        <li>CTAs visibles, directos y bien ubicados</li>
+                        <li>Tipografía y colores que generan confianza</li>
+                        <li>Mobile-first desde el primer boceto</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Diseño y desarrollo en el mismo equipo</h2>
+            <p>
+                Uno de los problemas más comunes en proyectos web es la brecha entre diseñador y desarrollador. El diseñador entrega algo hermoso que el desarrollador no puede implementar exactamente igual, y el cliente termina con un site que se parece vagamente a lo que aprobó.
+            </p>
+            <p>
+                En Petra Labs hacemos las dos cosas. Eso significa que lo que diseñamos es exactamente lo que se construye, sin compromisos de implementación, sin pérdida de detalles en el traspaso. El resultado es un sitio que se ve como fue pensado, en desktop y en celular.
+            </p>
+
+            <h2>¿Qué necesita el diseño web de una PyME argentina?</h2>
+            <p>Diseñar para una pequeña o mediana empresa en Buenos Aires requiere pensar en cosas específicas:</p>
+            <ul>
+                <li><strong>Confianza desde el inicio:</strong> datos de contacto visibles, dirección si aplica, WhatsApp a un clic. El cliente tiene que saber que sos real.</li>
+                <li><strong>Mensaje claro sobre el negocio:</strong> en 5 segundos el visitante tiene que entender qué hacés, para quién y cómo contactarte.</li>
+                <li><strong>Velocidad real:</strong> diseño bonito no sirve si tarda 8 segundos en cargar. Optimizamos imágenes y código desde el diseño.</li>
+                <li><strong>Adaptado al celular:</strong> el 65% del tráfico de las PyMEs argentinas viene de dispositivos móviles. El diseño arranca desde el celular.</li>
+                <li><strong>Consistencia con tu marca:</strong> colores, tipografías y tono que coincidan con tu logo, tus redes y tu identidad de negocio.</li>
+            </ul>
+
+            <h2>Un proceso sin sorpresas</h2>
+            <p>
+                Antes de abrir un programa de diseño, nos sentamos a entender tu negocio: quién es tu cliente, qué querés que haga cuando entre al sitio, y cómo querés que se vea tu empresa en digital. Con eso en mente, presentamos propuestas de diseño y no avanzamos una pantalla sin tu aprobación.
+            </p>
+            <p>
+                La mayoría de los proyectos de diseño web para PyMEs están listos en 3 a 4 semanas. Si necesitás algo urgente, consultanos y vemos qué se puede hacer.
+            </p>
+
+            <h2>¿Cuánto cuesta el diseño web para una PyME en Buenos Aires?</h2>
+            <p>
+                Nuestro plan de sitio web profesional parte de <strong>USD 400</strong>: diseño único y a medida, hasta 5 secciones, formulario de contacto, SEO básico y versión mobile. No hay costo adicional por el diseño separado del desarrollo: es un solo presupuesto, un solo equipo, un solo resultado.
+            </p>
+            <p>
+                Si ya tenés un sitio y solo necesitás rediseñarlo, también podemos ayudarte. Consultanos con lo que tenés y te decimos qué haríamos diferente.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- Servicios Section -->
+    <section class="servicios" id="servicios">
+        <div class="servicios-container">
+            <div class="servicios-header">
+                <h2 class="servicios-title">Lo que construimos</h2>
+                <p class="servicios-subtitle">Diseño y desarrollo incluidos en cada plan. Sin letra chica.</p>
+            </div>
+            <div class="servicios-grid">
+                <div class="servicio-card featured">
+                    <div class="servicio-price">USD 400</div>
+                    <h3 class="servicio-name">Sitio Web Profesional</h3>
+                    <p class="servicio-description">Para PyMEs y profesionales que necesitan presencia digital real.</p>
+                    <div class="servicio-includes">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Diseño único y a medida</li>
+                            <li>Hasta 5 secciones</li>
+                            <li>Formulario de contacto</li>
+                            <li>SEO básico</li>
+                            <li>Adaptado a celular</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20dise%C3%B1o%20web%20para%20mi%20PyME" class="servicio-cta" target="_blank" rel="noopener noreferrer">Empezar proyecto →</a>
+                </div>
+
+                <div class="servicio-card">
+                    <div class="servicio-price">USD 600</div>
+                    <h3 class="servicio-name">Tienda Online</h3>
+                    <p class="servicio-description">Para negocios que quieren vender las 24hs con diseño propio.</p>
+                    <div class="servicio-includes">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Todo lo del plan anterior</li>
+                            <li>Carrito de compras</li>
+                            <li>Integración MercadoPago</li>
+                            <li>Panel para gestionar productos</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20una%20tienda%20online" class="servicio-cta" target="_blank" rel="noopener noreferrer">Empezar proyecto →</a>
+                </div>
+
+                <div class="servicio-card">
+                    <div class="servicio-price">Consultá</div>
+                    <h3 class="servicio-name">Sistema a Medida</h3>
+                    <p class="servicio-description">Para empresas que necesitan automatizar y tener control total.</p>
+                    <div class="servicio-includes">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Todo lo anterior</li>
+                            <li>Base de datos propia</li>
+                            <li>Panel admin personalizado</li>
+                            <li>Reportes y métricas</li>
+                            <li>Soporte mensual</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20un%20sistema%20a%20medida" class="servicio-cta" target="_blank" rel="noopener noreferrer">Hablemos →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Trabajamos Section -->
+    <section class="como-trabajamos" id="como-trabajamos">
+        <div class="como-trabajamos-container">
+            <div class="como-trabajamos-header">
+                <h2 class="como-trabajamos-title">Cómo trabajamos</h2>
+                <p class="como-trabajamos-subtitle">Sin vueltas, sin sorpresas. Cuatro pasos claros de principio a fin.</p>
+            </div>
+            <div class="procesos">
+                <div class="proceso">
+                    <div class="proceso-number">01</div>
+                    <h3>Escuchamos</h3>
+                    <p>Entendemos tu negocio, tu marca y cómo querés que te vean tus clientes.</p>
+                </div>
+                <div class="proceso">
+                    <div class="proceso-number">02</div>
+                    <h3>Diseñamos juntos</h3>
+                    <p>Presentamos propuestas de diseño. Nada avanza sin tu aprobación.</p>
+                </div>
+                <div class="proceso">
+                    <div class="proceso-number">03</div>
+                    <h3>Construimos</h3>
+                    <p>El diseño aprobado se construye exactamente como se ve, línea por línea.</p>
+                </div>
+                <div class="proceso">
+                    <div class="proceso-number">04</div>
+                    <h3>Lanzamos</h3>
+                    <p>Entregamos, enseñamos a usar y te acompañamos después del lanzamiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="cta-final" id="contacto">
+        <div class="cta-final-container">
+            <h2>¿Tu sitio actual refleja lo que vale tu negocio?</h2>
+            <p>Si la respuesta es no, hablemos. La primera charla es gratis y sin compromiso.</p>
+            <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20dise%C3%B1o%20web%20para%20mi%20PyME%20en%20Buenos%20Aires" class="cta-button" target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left"><a href="/" style="color: inherit; text-decoration: none;">PETRA LABS</a></div>
+            <div class="footer-center">
+                <a href="/">Inicio</a>
+                <a href="/#servicios">Servicios</a>
+                <a href="/#como-trabajamos">Cómo trabajamos</a>
+                <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs" target="_blank" rel="noopener noreferrer">Contacto</a>
+                <a href="/desarrollo-web-buenos-aires/" style="opacity: 0.5; font-size: 13px;">Desarrollo web</a>
+                <a href="/tienda-online-buenos-aires/" style="opacity: 0.5; font-size: 13px;">Tiendas online</a>
+            </div>
+            <div class="footer-right">© 2026 — Construido con cuidado, línea por línea.</div>
+        </div>
+    </footer>
+
+    <script src="../main.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Diseño Web para PyMEs Buenos Aires",
+      "description": "Diseño web profesional para pequeñas y medianas empresas en Buenos Aires. Sites que reflejan tu marca, generan confianza y convierten visitas en clientes.",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Petra Labs",
+        "url": "https://petralabs.xyz",
+        "telephone": "+5491127343775",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Buenos Aires",
+          "addressCountry": "AR"
+        },
+        "areaServed": "Buenos Aires"
+      },
+      "serviceType": "Diseño Web",
+      "areaServed": "Buenos Aires",
+      "url": "https://petralabs.xyz/diseno-web-pymes-buenos-aires/",
+      "offers": {
+        "@type": "Offer",
+        "price": "400",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</body>
+</html>

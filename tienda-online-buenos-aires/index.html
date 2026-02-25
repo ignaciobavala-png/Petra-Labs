@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online Buenos Aires | MercadoPago y E-commerce — Petra Labs</title>
+    <meta name="description" content="Creamos tiendas online en Buenos Aires con MercadoPago integrado. Vendé las 24hs, gestioná tu stock y cobrá de forma segura. Desde USD 600." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://petralabs.xyz/tienda-online-buenos-aires/" />
+    <meta property="og:title" content="Tienda Online Buenos Aires | MercadoPago y E-commerce — Petra Labs" />
+    <meta property="og:description" content="Creamos tiendas online en Buenos Aires con MercadoPago integrado. Vendé las 24hs, gestioná tu stock y cobrá de forma segura. Desde USD 600." />
+    <meta property="og:url" content="https://petralabs.xyz/tienda-online-buenos-aires/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://petralabs.xyz/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tienda Online Buenos Aires | Petra Labs" />
+    <meta name="twitter:description" content="Tiendas online con MercadoPago en Buenos Aires. Vendé las 24hs con una plataforma hecha a medida para tu negocio. Desde USD 600." />
+    <meta name="twitter:image" content="https://petralabs.xyz/og-image.png" />
+    <meta name="author" content="Petra Labs" />
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%231A1A1A'/><text x='50' y='74' font-size='64' text-anchor='middle' fill='%23C8F03C' font-family='sans-serif' font-weight='bold'>P</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        /* SEO Content Section */
+        .seo-content {
+            padding: 80px 0;
+            background-color: var(--bg);
+            border-top: 1px solid var(--border);
+        }
+
+        .seo-content-container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .seo-content h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text);
+            margin: 48px 0 16px;
+        }
+
+        .seo-content h2:first-of-type {
+            margin-top: 0;
+        }
+
+        .seo-content p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px;
+            color: #333333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .seo-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .seo-content ul li {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px;
+            color: #333333;
+            line-height: 1.7;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .seo-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .seo-content ul li strong {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .seo-highlight {
+            background-color: var(--text);
+            color: var(--bg);
+            border-radius: 8px;
+            padding: 32px 36px;
+            margin: 40px 0;
+        }
+
+        .seo-highlight p {
+            color: var(--bg);
+            font-size: 18px;
+            font-style: italic;
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.75;
+        }
+
+        .seo-highlight span {
+            display: block;
+            font-family: 'Syne', sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--accent);
+            margin-top: 16px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* Hero SEO */
+        .hero-seo {
+            padding: 60px 20px 40px;
+            background-color: var(--bg);
+        }
+
+        .hero-seo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .hero-seo-eyebrow {
+            display: inline-block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--accent);
+            width: fit-content;
+        }
+
+        .hero-seo h1 {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: clamp(36px, 7vw, 60px);
+            color: var(--text);
+            line-height: 1.0;
+            margin: 0;
+        }
+
+        .hero-seo h1 .accent {
+            color: var(--accent);
+        }
+
+        .hero-seo-subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            color: #444444;
+            line-height: 1.75;
+            max-width: 640px;
+            margin: 0;
+        }
+
+        .hero-seo-cta {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .hero-seo-cta a.primary {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--text);
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-seo-cta a.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(200, 240, 60, 0.3);
+        }
+
+        .hero-seo-cta a.secondary {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .hero-seo-cta a.secondary:hover {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        /* Feature pills */
+        .feature-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 24px 0 0;
+        }
+
+        .feature-pill {
+            display: inline-block;
+            background-color: var(--text);
+            color: var(--bg);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 99px;
+            letter-spacing: 0.02em;
+        }
+
+        .feature-pill.accent {
+            background-color: var(--accent);
+            color: var(--text);
+        }
+
+        @media (min-width: 1024px) {
+            .hero-seo {
+                padding: 100px 20px 80px;
+            }
+
+            .hero-seo-cta {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .seo-content {
+                padding: 100px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo">PETRA LABS</a>
+            <button class="hamburger" aria-label="Abrir menú">☰</button>
+            <ul class="nav-links">
+                <li><a href="/#servicios">Servicios</a></li>
+                <li><a href="/#como-trabajamos">Cómo trabajamos</a></li>
+                <li><a href="/auditoria" class="cta-nav auditoria-nav">Auditoría free ✦</a></li>
+                <li><a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20una%20tienda%20online" class="cta-nav" target="_blank" rel="noopener noreferrer">Hablemos →</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu">
+        <button class="mobile-menu-close">✕</button>
+        <div class="mobile-menu-content">
+            <a href="/#servicios">Servicios</a>
+            <a href="/#como-trabajamos">Cómo trabajamos</a>
+            <a href="/auditoria">Auditoría free ✦</a>
+            <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20una%20tienda%20online" target="_blank" rel="noopener noreferrer" class="cta-nav">Hablemos →</a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero-seo">
+        <div class="hero-seo-container">
+            <span class="hero-seo-eyebrow">E-commerce · Buenos Aires · MercadoPago</span>
+            <h1>
+                Tu tienda online<br>
+                en Buenos Aires,<br>
+                con <span class="accent">MercadoPago</span>
+            </h1>
+            <p class="hero-seo-subtitle">
+                Vendé tus productos las 24hs con una tienda hecha a medida para el mercado argentino. Carrito de compras, gestión de stock y cobros seguros desde el día uno.
+            </p>
+            <div class="hero-seo-cta">
+                <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20una%20tienda%20online%20con%20MercadoPago" class="primary" target="_blank" rel="noopener noreferrer">Consultá por WhatsApp →</a>
+                <a href="#servicios" class="secondary">Ver planes y precios ↓</a>
+            </div>
+            <div class="feature-pills">
+                <span class="feature-pill accent">MercadoPago</span>
+                <span class="feature-pill">Carrito de compras</span>
+                <span class="feature-pill">Panel de gestión</span>
+                <span class="feature-pill">Mobile-first</span>
+                <span class="feature-pill">SEO incluido</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEO Content -->
+    <section class="seo-content">
+        <div class="seo-content-container">
+
+            <h2>Vender online en Argentina tiene sus particularidades</h2>
+            <p>
+                El e-commerce en Argentina no es igual al de cualquier otro país. Acá los clientes esperan pagar con MercadoPago, tienen la opción de cuotas en su tarjeta, y desconfían de plataformas que no conocen. Una tienda online que no contempla estas realidades pierde ventas desde el primer día.
+            </p>
+            <p>
+                En Petra Labs diseñamos tiendas online en Buenos Aires pensadas para el mercado local. Integramos MercadoPago de forma nativa, optimizamos el flujo de compra para reducir el abandono del carrito, y construimos una experiencia que genera confianza desde el momento en que el cliente entra al sitio.
+            </p>
+
+            <div class="seo-highlight">
+                <p>"El 70% de los carritos de compra se abandonan antes del pago. Un checkout claro y con los medios de pago correctos hace toda la diferencia."</p>
+                <span>— Petra Labs, Buenos Aires</span>
+            </div>
+
+            <h2>MercadoPago: el estándar del e-commerce argentino</h2>
+            <p>
+                MercadoPago no es solo una pasarela de pago: es la infraestructura sobre la que funciona el comercio electrónico en Argentina. Integrarlo bien en tu tienda significa que tus clientes pueden pagar con tarjeta de crédito en cuotas, débito, transferencia bancaria, saldo de Mercado Pago o QR —todo en el mismo checkout, sin fricciones.
+            </p>
+            <p>
+                Nuestra integración con <strong>MercadoPago</strong> incluye la configuración completa de tu cuenta de vendedor, las notificaciones de pago automáticas, y la gestión de devoluciones. Vos te concentrás en vender, nosotros nos ocupamos de que la plata llegue a tu cuenta.
+            </p>
+
+            <h2>¿Qué incluye una tienda online hecha a medida?</h2>
+            <p>Una tienda online real va mucho más allá de mostrar productos en una grilla. Esto es lo que construimos en cada proyecto:</p>
+            <ul>
+                <li><strong>Catálogo de productos:</strong> con fotos, variantes (talla, color, etc.), precios y stock en tiempo real.</li>
+                <li><strong>Carrito de compras y checkout:</strong> flujo simplificado para que el cliente finalice la compra en el menor tiempo posible.</li>
+                <li><strong>Integración MercadoPago completa:</strong> todos los medios de pago, cuotas y notificaciones automáticas.</li>
+                <li><strong>Panel de administración:</strong> cargás tus productos, actualizás precios y ves tus pedidos sin tocar una línea de código.</li>
+                <li><strong>Gestión de stock:</strong> el sistema descuenta unidades automáticamente con cada venta y te avisa cuando queda poco inventario.</li>
+                <li><strong>Diseño mobile-first:</strong> más del 60% de las compras online en Argentina se hacen desde el celular.</li>
+                <li><strong>SEO para e-commerce:</strong> cada página de producto optimizada para aparecer en Google.</li>
+            </ul>
+
+            <h2>Más que una tienda: una herramienta de ventas</h2>
+            <p>
+                Una tienda online bien construida no solo procesa pagos: trabaja por vos mientras dormís. Eso significa que las descripciones de tus productos están pensadas para el SEO, que el botón de WhatsApp está siempre visible para las dudas de último momento, y que el diseño transmite confianza desde la primera pantalla.
+            </p>
+            <p>
+                También nos ocupamos de que la tienda tenga velocidad real: imágenes optimizadas, código limpio y hosting correcto. Un sitio lento pierde ventas. Google lo penaliza. Y el cliente simplemente se va.
+            </p>
+
+            <h2>¿Cuánto cuesta una tienda online en Buenos Aires?</h2>
+            <p>
+                Nuestro plan de tienda online parte de <strong>USD 600</strong>. Incluye diseño único, catálogo de productos, carrito de compras, integración completa con MercadoPago, panel de administración y versión mobile. Sin comisiones por venta, sin cuota mensual obligatoria, sin letra chica.
+            </p>
+            <p>
+                Si tu negocio necesita funcionalidades más avanzadas —múltiples depósitos, sistema de envíos automatizado, facturación integrada, o reportes de ventas detallados— tenemos un plan de sistema a medida. Consultanos y armamos el presupuesto que se ajusta a tu operación.
+            </p>
+
+        </div>
+    </section>
+
+    <!-- Servicios Section -->
+    <section class="servicios" id="servicios">
+        <div class="servicios-container">
+            <div class="servicios-header">
+                <h2 class="servicios-title">Elegí tu plan</h2>
+                <p class="servicios-subtitle">Del sitio institucional a la tienda completa con sistema a medida.</p>
+            </div>
+            <div class="servicios-grid">
+                <div class="servicio-card">
+                    <div class="servicio-price">USD 400</div>
+                    <h3 class="servicio-name">Sitio Web Profesional</h3>
+                    <p class="servicio-description">Para profesionales y negocios que necesitan presencia digital real.</p>
+                    <div class="servicio-includes">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Diseño único y a medida</li>
+                            <li>Hasta 5 secciones</li>
+                            <li>Formulario de contacto</li>
+                            <li>SEO básico</li>
+                            <li>Adaptado a celular</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20un%20sitio%20web%20profesional" class="servicio-cta" target="_blank" rel="noopener noreferrer">Empezar proyecto →</a>
+                </div>
+
+                <div class="servicio-card featured">
+                    <div class="servicio-price">USD 600</div>
+                    <h3 class="servicio-name">Tienda Online</h3>
+                    <p class="servicio-description">Para negocios que quieren vender las 24hs con MercadoPago.</p>
+                    <div class="servicio-includes">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Todo lo del plan anterior</li>
+                            <li>Carrito de compras</li>
+                            <li>Integración MercadoPago</li>
+                            <li>Panel para gestionar productos</li>
+                            <li>Gestión de stock</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20una%20tienda%20online%20con%20MercadoPago" class="servicio-cta" target="_blank" rel="noopener noreferrer">Empezar proyecto →</a>
+                </div>
+
+                <div class="servicio-card">
+                    <div class="servicio-price">Consultá</div>
+                    <h3 class="servicio-name">Tienda + Sistema a Medida</h3>
+                    <p class="servicio-description">Para empresas que necesitan automatizar y tener control total.</p>
+                    <div class="servicio-includes">
+                        <h4>Incluye:</h4>
+                        <ul>
+                            <li>Todo lo anterior</li>
+                            <li>Base de datos propia</li>
+                            <li>Panel admin personalizado</li>
+                            <li>Reportes y métricas</li>
+                            <li>Soporte mensual</li>
+                        </ul>
+                    </div>
+                    <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20consultar%20por%20un%20sistema%20a%20medida" class="servicio-cta" target="_blank" rel="noopener noreferrer">Hablemos →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo Trabajamos Section -->
+    <section class="como-trabajamos" id="como-trabajamos">
+        <div class="como-trabajamos-container">
+            <div class="como-trabajamos-header">
+                <h2 class="como-trabajamos-title">Cómo trabajamos</h2>
+                <p class="como-trabajamos-subtitle">Sin vueltas, sin sorpresas. Cuatro pasos claros de principio a fin.</p>
+            </div>
+            <div class="procesos">
+                <div class="proceso">
+                    <div class="proceso-number">01</div>
+                    <h3>Escuchamos</h3>
+                    <p>Entendemos tu negocio, tu catálogo y cómo querés que funcione tu tienda.</p>
+                </div>
+                <div class="proceso">
+                    <div class="proceso-number">02</div>
+                    <h3>Diseñamos juntos</h3>
+                    <p>Creamos el diseño y la arquitectura. Nada avanza sin tu aprobación.</p>
+                </div>
+                <div class="proceso">
+                    <div class="proceso-number">03</div>
+                    <h3>Construimos</h3>
+                    <p>Desarrollo sólido, integración MercadoPago y pruebas de pago reales.</p>
+                </div>
+                <div class="proceso">
+                    <div class="proceso-number">04</div>
+                    <h3>Lanzamos</h3>
+                    <p>Entregamos, te enseñamos a gestionar tu tienda y te acompañamos en el lanzamiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="cta-final" id="contacto">
+        <div class="cta-final-container">
+            <h2>¿Listo para vender online?</h2>
+            <p>Contanos qué vendés y te decimos exactamente qué necesita tu tienda. La primera charla es gratis.</p>
+            <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs,%20quiero%20armar%20una%20tienda%20online%20con%20MercadoPago" class="cta-button" target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left"><a href="/" style="color: inherit; text-decoration: none;">PETRA LABS</a></div>
+            <div class="footer-center">
+                <a href="/">Inicio</a>
+                <a href="/#servicios">Servicios</a>
+                <a href="/#como-trabajamos">Cómo trabajamos</a>
+                <a href="https://wa.me/5491127343775?text=Hola%20Petra%20Labs" target="_blank" rel="noopener noreferrer">Contacto</a>
+                <a href="/desarrollo-web-buenos-aires/" style="opacity: 0.5; font-size: 13px;">Desarrollo web</a>
+                <a href="/diseno-web-pymes-buenos-aires/" style="opacity: 0.5; font-size: 13px;">Diseño para PyMEs</a>
+            </div>
+            <div class="footer-right">© 2026 — Construido con cuidado, línea por línea.</div>
+        </div>
+    </footer>
+
+    <script src="../main.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Tienda Online Buenos Aires con MercadoPago",
+      "description": "Creamos tiendas online en Buenos Aires con MercadoPago integrado. Carrito de compras, gestión de stock y cobros seguros para negocios argentinos.",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Petra Labs",
+        "url": "https://petralabs.xyz",
+        "telephone": "+5491127343775",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Buenos Aires",
+          "addressCountry": "AR"
+        },
+        "areaServed": "Buenos Aires"
+      },
+      "serviceType": "E-commerce",
+      "areaServed": "Buenos Aires",
+      "url": "https://petralabs.xyz/tienda-online-buenos-aires/",
+      "offers": {
+        "@type": "Offer",
+        "price": "600",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+</body>
+</html>
