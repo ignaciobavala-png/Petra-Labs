@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile Navigation */
 nav {
-    padding: 16px 0;
+    padding: 12px 0;
     border-bottom: none;
     background-color: transparent;
     position: absolute;
@@ -53,14 +53,29 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 68px;
+    overflow: visible;
 }
 
 .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 99px;
+    width: auto;
+    display: block;
+}
+
+.logo-text {
     font-family: 'Syne', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: #ffffff;
-    text-decoration: none;
+    letter-spacing: 0.05em;
+    margin-left: 10px;
 }
 
 .hamburger {
@@ -192,7 +207,7 @@ nav {
 
 /* Hero Section - Mobile */
 .hero {
-    padding: 72px 20px 48px;
+    padding: 100px 20px 48px;
     background: linear-gradient(135deg, #2a2d32 0%, #3d4148 30%, #2f3237 60%, #252830 100%);
     position: relative;
     overflow: hidden;
@@ -1081,35 +1096,39 @@ nav {
 
 /* CTA Final Section - Mobile */
 .cta-final {
-    padding: 60px 0;
+    padding: 40px 0;
     background: linear-gradient(135deg, #1f2229 0%, #272c34 100%);
     color: #f4f5f8;
-    text-align: center;
 }
 
 .cta-final-container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.cta-final-text {
+    flex: 1;
 }
 
 .cta-final h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    margin-bottom: 20px;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: 10px;
     color: #f4f5f8;
     font-family: 'Syne', sans-serif;
     font-weight: 700;
 }
 
 .cta-final p {
-    font-size: 18px;
-    margin-bottom: 40px;
+    font-size: 16px;
     color: rgba(244, 245, 248, 0.75);
     font-family: 'DM Sans', sans-serif;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto 40px;
-    line-height: 1.6;
+    line-height: 1.5;
+    margin: 0;
 }
 
 .cta-final .cta-button {
