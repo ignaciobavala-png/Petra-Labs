@@ -24,7 +24,7 @@
 
   body {
     font-family: 'Bricolage Grotesque', sans-serif;
-    background: var(--cream);
+    background: linear-gradient(180deg, #f2f4f9 0%, #e6e9f2 55%, #dfe3ec 100%);
     color: var(--dark);
     min-height: 100vh;
     display: flex;
@@ -32,6 +32,22 @@
     align-items: center;
     justify-content: flex-start;
     padding: 48px 24px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .bubble-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.9;
+  }
+
+  #audit-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
   /* Back link */
@@ -577,6 +593,7 @@
 </script>
 </head>
 <body>
+<div class="bubble-layer"><canvas id="audit-canvas"></canvas></div>
 
 <a href="../index.html" class="back-link">← Petra Labs</a>
 
@@ -687,6 +704,147 @@
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('audit-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let bubbles = [];
+  let w, h;
+  let mouse = { x: -9999, y: -9999 };
+  let rafId;
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    createBubbles();
+  }
+
+  function createBubbles() {
+    bubbles = [];
+    const cols = Math.max(4, Math.ceil(w / 260));
+    const rows = Math.max(3, Math.ceil(h / 220));
+    const spacingX = w / (cols + 1);
+    const spacingY = h / (rows + 1);
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const accent = Math.random() > 0.7;
+        const jitterX = (Math.random() - 0.5) * spacingX * 0.6;
+        const jitterY = (Math.random() - 0.5) * spacingY * 0.6;
+        const baseRadius = Math.random() * 22 + 18;
+        bubbles.push({
+          baseX: spacingX * (c + 1) + jitterX,
+          baseY: spacingY * (r + 1) + jitterY,
+          x: spacingX * (c + 1),
+          y: spacingY * (r + 1),
+          vx: 0,
+          vy: 0,
+          radius: baseRadius,
+          phase: Math.random() * Math.PI * 2,
+          speed: Math.random() * 0.08 + 0.045,
+          accent,
+        });
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const time = Date.now() * 0.001;
+
+    for (let i = 0; i < bubbles.length; i++) {
+      for (let j = i + 1; j < bubbles.length; j++) {
+        const a = bubbles[i];
+        const b = bubbles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.hypot(dx, dy);
+        const maxDist = 260;
+
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * 0.045;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(70, 90, 130, ${alpha})`;
+          ctx.lineWidth = 0.4;
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (const bubble of bubbles) {
+      const pulse = Math.sin(time * bubble.speed + bubble.phase) * 0.25 + 0.75;
+      const driftX = Math.sin(time * 0.12 + bubble.phase) * 18;
+      const driftY = Math.cos(time * 0.1 + bubble.phase * 1.2) * 16;
+
+      const targetX = bubble.baseX + driftX;
+      const targetY = bubble.baseY + driftY;
+
+      const dx = mouse.x - bubble.x;
+      const dy = mouse.y - bubble.y;
+      const dist = Math.hypot(dx, dy);
+      const mouseForce = dist < 240 ? (1 - dist / 240) * 0.1 : 0;
+
+      bubble.vx += (targetX - bubble.x) * 0.01 + dx * mouseForce * 0.008;
+      bubble.vy += (targetY - bubble.y) * 0.01 + dy * mouseForce * 0.008;
+      bubble.vx *= 0.89;
+      bubble.vy *= 0.89;
+      bubble.x += bubble.vx;
+      bubble.y += bubble.vy;
+
+      const radius = bubble.radius * (0.92 + pulse * 0.14);
+      const strokeAlpha = 0.24 + pulse * 0.16;
+
+      ctx.beginPath();
+      ctx.arc(bubble.x, bubble.y, radius, 0, Math.PI * 2);
+      if (bubble.accent) {
+        ctx.strokeStyle = `rgba(150, 195, 240, ${strokeAlpha})`;
+        ctx.fillStyle = `rgba(150, 195, 240, ${strokeAlpha * 0.14})`;
+      } else {
+        ctx.strokeStyle = `rgba(120, 140, 175, ${strokeAlpha})`;
+        ctx.fillStyle = `rgba(120, 140, 175, ${strokeAlpha * 0.12})`;
+      }
+      ctx.lineWidth = 1.1;
+      ctx.fill();
+      ctx.stroke();
+
+      if (radius > 18) {
+        ctx.beginPath();
+        ctx.arc(bubble.x - radius * 0.32, bubble.y - radius * 0.28, radius * 0.1, 0, Math.PI * 2);
+        ctx.fillStyle = bubble.accent
+          ? `rgba(220, 235, 255, ${strokeAlpha * 0.5})`
+          : `rgba(205, 215, 235, ${strokeAlpha * 0.5})`;
+        ctx.fill();
+      }
+    }
+
+    rafId = requestAnimationFrame(draw);
+  }
+
+  function onMouseMove(event) {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = event.clientX - rect.left;
+    mouse.y = event.clientY - rect.top;
+  }
+
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', onMouseMove);
+
+  resize();
+  cancelAnimationFrame(rafId);
+  draw();
+})();
+</script>
 
 <!-- Preview modal -->
 <div id="shareModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:24px;">

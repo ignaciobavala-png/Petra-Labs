@@ -51,11 +51,11 @@ faqItems.forEach(item => {
     });
 });
 
-// Hero Canvas — Network Animation
+// Hero Canvas — Bubble Animation (fine, large, sparse)
 const canvas = document.getElementById('hero-canvas');
 if (canvas) {
     const ctx = canvas.getContext('2d');
-    let nodes = [];
+    let bubbles = [];
     let w, h;
     let mouse = { x: -9999, y: -9999 };
     let animId;
@@ -72,28 +72,30 @@ if (canvas) {
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    function createNodes() {
-        nodes = [];
-        const cols = Math.ceil(w / 65);
-        const rows = Math.ceil(h / 55);
+    function createBubbles() {
+        bubbles = [];
+        // Very sparse grid — few elegant bubbles
+        const cols = Math.ceil(w / 260);
+        const rows = Math.ceil(h / 220);
         const spacingX = w / (cols + 1);
         const spacingY = h / (rows + 1);
 
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-                const isMain = Math.random() > 0.75;
-                const rowOffset = c % 2 === 0 ? 0 : spacingY * 0.4;
-                nodes.push({
-                    baseX: spacingX * (c + 1),
-                    baseY: spacingY * (r + 1) + rowOffset,
+                const isAccent = Math.random() > 0.7;
+                const rowOffset = c % 2 === 0 ? 0 : spacingY * 0.35;
+                const baseRadius = Math.random() * 30 + 20;
+                bubbles.push({
+                    baseX: spacingX * (c + 1) + (Math.random() - 0.5) * spacingX * 0.5,
+                    baseY: spacingY * (r + 1) + rowOffset + (Math.random() - 0.5) * spacingY * 0.4,
                     x: spacingX * (c + 1),
                     y: spacingY * (r + 1) + rowOffset,
                     vx: 0,
                     vy: 0,
-                    size: isMain ? Math.random() * 2 + 3 : Math.random() * 1.5 + 1.5,
+                    radius: baseRadius,
                     phase: Math.random() * Math.PI * 2,
-                    speed: Math.random() * 0.25 + 0.15,
-                    isMain,
+                    speed: Math.random() * 0.12 + 0.06,
+                    isAccent,
                 });
             }
         }
@@ -103,68 +105,79 @@ if (canvas) {
         ctx.clearRect(0, 0, w, h);
         const time = Date.now() * 0.001;
 
-        // Draw connections first (behind nodes)
-        for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-                const a = nodes[i];
-                const b = nodes[j];
+        // Draw thin connections between nearby bubbles
+        for (let i = 0; i < bubbles.length; i++) {
+            for (let j = i + 1; j < bubbles.length; j++) {
+                const a = bubbles[i];
+                const b = bubbles[j];
                 const dx = a.x - b.x;
                 const dy = a.y - b.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                const maxDist = 160;
+                const maxDist = 280;
 
                 if (dist < maxDist) {
-                    const alpha = (1 - dist / maxDist) * 0.18;
+                    const alpha = (1 - dist / maxDist) * 0.08;
                     ctx.beginPath();
                     ctx.moveTo(a.x, a.y);
                     ctx.lineTo(b.x, b.y);
-                    ctx.strokeStyle = `rgba(200, 240, 60, ${alpha})`;
-                    ctx.lineWidth = 0.6;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                    ctx.lineWidth = 0.55;
                     ctx.stroke();
                 }
             }
         }
 
-        // Update and draw nodes
-        for (const node of nodes) {
-            const pulse = Math.sin(time * node.speed + node.phase) * 0.35 + 0.65;
-            const driftX = Math.sin(time * 0.25 + node.phase) * 14;
-            const driftY = Math.cos(time * 0.2 + node.phase * 1.3) * 14;
+        // Update and draw bubbles
+        for (const b of bubbles) {
+            const pulse = Math.sin(time * b.speed + b.phase) * 0.3 + 0.7;
+            // Slow, wide drift for elegant movement
+            const driftX = Math.sin(time * 0.15 + b.phase) * 22;
+            const driftY = Math.cos(time * 0.12 + b.phase * 1.3) * 18;
 
-            const tx = node.baseX + driftX;
-            const ty = node.baseY + driftY;
+            const tx = b.baseX + driftX;
+            const ty = b.baseY + driftY;
 
-            const dx = mouse.x - node.x;
-            const dy = mouse.y - node.y;
+            // Mouse interaction — gentle push
+            const dx = mouse.x - b.x;
+            const dy = mouse.y - b.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const mouseForce = dist < 200 ? (1 - dist / 200) * 0.18 : 0;
+            const mouseForce = dist < 250 ? (1 - dist / 250) * 0.12 : 0;
 
-            node.vx += (tx - node.x) * 0.018 + dx * mouseForce * 0.01;
-            node.vy += (ty - node.y) * 0.018 + dy * mouseForce * 0.01;
-            node.vx *= 0.85;
-            node.vy *= 0.85;
-            node.x += node.vx;
-            node.y += node.vy;
+            b.vx += (tx - b.x) * 0.012 + dx * mouseForce * 0.008;
+            b.vy += (ty - b.y) * 0.012 + dy * mouseForce * 0.008;
+            b.vx *= 0.88;
+            b.vy *= 0.88;
+            b.x += b.vx;
+            b.y += b.vy;
 
-            const radius = node.size * (0.8 + pulse * 0.3);
-            const alpha = 0.35 + pulse * 0.45;
+            const r = b.radius * (0.9 + pulse * 0.12);
+            const strokeAlpha = 0.2 + pulse * 0.12;
 
-            if (node.isMain) {
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(26, 26, 26, ${alpha * 0.7})`;
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, radius * 0.5, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200, 240, 60, ${alpha})`;
-                ctx.shadowColor = `rgba(200, 240, 60, ${alpha * 0.6})`;
-                ctx.shadowBlur = 10;
-                ctx.fill();
-                ctx.shadowBlur = 0;
+            // Fine bubble stroke (thin circle outline)
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, r, 0, Math.PI * 2);
+            if (b.isAccent) {
+                ctx.strokeStyle = `rgba(200, 240, 60, ${strokeAlpha})`;
+                ctx.fillStyle = `rgba(200, 240, 60, ${strokeAlpha * 0.08})`;
             } else {
+                ctx.strokeStyle = `rgba(255, 255, 255, ${strokeAlpha * 0.6})`;
+                ctx.fillStyle = `rgba(255, 255, 255, ${strokeAlpha * 0.06})`;
+            }
+            ctx.lineWidth = 1;
+            ctx.fill();
+            ctx.stroke();
+
+            // Small highlight dot at top-left of bubble
+            if (r > 18) {
+                const hlX = b.x - r * 0.3;
+                const hlY = b.y - r * 0.3;
+                const hlR = r * 0.095;
+                const hlAlpha = strokeAlpha * 0.5;
                 ctx.beginPath();
-                ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(26, 26, 26, ${alpha * 0.6})`;
+                ctx.arc(hlX, hlY, hlR, 0, Math.PI * 2);
+                ctx.fillStyle = b.isAccent
+                    ? `rgba(255, 255, 255, ${hlAlpha * 0.75})`
+                    : `rgba(255, 255, 255, ${hlAlpha})`;
                 ctx.fill();
             }
         }
@@ -184,14 +197,14 @@ if (canvas) {
 
     function init() {
         resize();
-        createNodes();
+        createBubbles();
         if (animId) cancelAnimationFrame(animId);
         draw();
     }
 
     window.addEventListener('resize', () => {
         resize();
-        createNodes();
+        createBubbles();
     });
     window.addEventListener('mousemove', onMouse);
 
